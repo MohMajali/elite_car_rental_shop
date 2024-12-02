@@ -157,6 +157,7 @@ if (!$O_ID) {
                     <tr>
                       <th scope="col">ID</th>
                       <th scope="col">Image</th>
+                      <th scope="col">Name</th>
                       <th scope="col">Type</th>
                       <th scope="col">Color</th>
                       <th scope="col">Gear Type</th>
@@ -164,7 +165,6 @@ if (!$O_ID) {
                       <th scope="col">model</th>
                       <th scope="col">Price / Day</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Active</th>
                       <th scope="col">Created At</th>
                       <th scope="col">Actions</th>
                     </tr>
@@ -180,6 +180,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
     $car_id = $row1['id'];
     $type_id = $row1['type_id'];
     $image = $row1['image'];
+    $name = $row1['name'];
     $color = $row1['color'];
     $gear_transmission = $row1['gear_transmission'];
     $number_of_seats = $row1['number_of_seats'];
@@ -198,14 +199,14 @@ while ($row1 = mysqli_fetch_array($sql1)) {
                     <tr>
                       <th scope="row"><?php echo $car_id ?></th>
                       <th scope="row"><img src="../Office_Dashboard/<?php echo $image ?>" alt="" width="150px" height="150px"></th>
+                      <th scope="row"><?php echo $name ?></th>
                       <th scope="row"><?php echo $type ?></th>
                       <td scope="row"><?php echo $color ?></td>
                       <td scope="row"><?php echo $gear_transmission ?></td>
                       <td scope="row"><?php echo $number_of_seats ?></td>
                       <td scope="row"><?php echo $model ?></td>
                       <td scope="row"><?php echo $price_per_day ?> JODs</td>
-                      <td scope="row"><?php echo $availability_status ?></td>
-                      <td scope="row"><?php echo $active ?></td>
+                      <td scope="row"><?php echo ($availability_status == 0) ? "Available" : "Booked" ?></td>
                       <th scope="row"><?php echo $created_at ?></th>
                       <th>
 

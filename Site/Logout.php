@@ -10,6 +10,6 @@ echo "<script language='JavaScript'>
       </script>";
 
 echo '<script language="JavaScript">
-        document.location="../../Customer_Login.php";
+        document.location="../Customer_Login.php";
     </script>';
 ?>

@@ -160,6 +160,12 @@ if (isset($_POST['Submit'])) {
                           <a href="./Register.php">Signup Now</a>
                         </p>
                       </div>
+
+                      <div class="col-12">
+                        <p class="small mb-0">
+                          <a href="./Forgot-password.php?type=office">Forgot your password?</a>
+                        </p>
+                      </div>
                       <div class="col-12">
                         <button class="btn btn-primary w-100" type="submit" name="Submit">
                           Login

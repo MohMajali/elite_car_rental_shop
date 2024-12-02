@@ -4,7 +4,7 @@ session_start();
 include "../Connect.php";
 
 $C_ID = $_SESSION['C_Log'];
-$type_id = $_GET['type_id'];
+$office_id = $_GET['office_id'];
 
 if ($C_ID) {
 
@@ -13,6 +13,29 @@ if ($C_ID) {
 
     $name = $row1['name'];
     $email = $row1['email'];
+
+    if (isset($_POST['Submit'])) {
+
+        $feedback = $_POST['feedback'];
+        $customer_id = $_POST['customer_id'];
+        $office_id = $_POST['office_id'];
+
+        $stmt = $con->prepare("INSERT INTO feedbacks (customer_id, office_id, feedback) VALUES (?, ?, ?) ");
+
+        $stmt->bind_param("iis", $customer_id, $office_id, $feedback);
+
+        if ($stmt->execute()) {
+
+            echo "<script language='JavaScript'>
+          alert ('Thank you for your feedback !');
+     </script>";
+
+            echo "<script language='JavaScript'>
+    document.location='./Bookings.php';
+       </script>";
+        }
+
+    }
 
 }
 
@@ -25,6 +48,10 @@ if ($C_ID) {
     <title>Elite</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link
+      href="../assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
@@ -54,7 +81,7 @@ if ($C_ID) {
 
 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href="index.php">Eli<span>ti</span></a>
+	      <a class="navbar-brand" href="index.php">Eli<span>te</span></a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -67,20 +94,20 @@ if ($C_ID) {
 	          <li class="nav-item "><a href="Offices.php" class="nav-link">Offices</a></li>
 	          <li class="nav-item"><a href="contact.php" class="nav-link">Contact</a></li>
 
-			  <?php if($C_ID) {?>
-				
+			  <?php if ($C_ID) {?>
+
 				<li class="nav-item"><a href="Account.php" class="nav-link">Account</a></li>
-				<li class="nav-item "><a href="Bookings.php" class="nav-link">Bookings</a></li>
+				<li class="nav-item active"><a href="Bookings.php" class="nav-link">Bookings</a></li>
 				<li class="nav-item"><a href="Logout.php" class="nav-link">Logout</a></li>
-				
-				<?php } else { ?>
+
+				<?php } else {?>
 
 
 
 					<li class="nav-item"><a href="../Customer_Login.php" class="nav-link">Login</a></li>
 					<li class="nav-item"><a href="../Customer_Register.php" class="nav-link">Sign up</a></li>
 
-				<?php }  ?>
+				<?php }?>
 
 
 	        </ul>
@@ -94,82 +121,83 @@ if ($C_ID) {
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Cars <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">Choose Your Car</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home <i class="ion-ios-arrow-forward"></i></a></span> <span><?php echo $car_name ?> details <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-3 bread">Book Car<?php echo $car_name ?></h1>
           </div>
         </div>
       </div>
     </section>
 
 
-		<section class="ftco-section bg-light">
-    	<div class="container">
-    		<div class="row">
+		<section class="ftco-section ftco-car-details">
+      <div class="container">
 
-
-
-			<?php
-$sql1 = $type_id ? mysqli_query($con, "SELECT * from cars WHERE active = 1 AND type_id = '$type_id' ORDER BY id DESC") :
- mysqli_query($con, "SELECT * from cars WHERE active = 1 ORDER BY id DESC");
-
-while ($row1 = mysqli_fetch_array($sql1)) {
-
-    $car_id = $row1['id'];
-    $office_id = $row1['office_id'];
-    $type_id = $row1['type_id'];
-    $car_name = $row1['name'];
-    $car_image = $row1['image'];
-    $color = $row1['color'];
-    $gear_transmission = $row1['gear_transmission'];
-    $number_of_seats = $row1['number_of_seats'];
-    $model = $row1['model'];
-    $price_per_day = $row1['price_per_day'];
-    $availability_status = $row1['availability_status'];
-
-    $sql2 = mysqli_query($con, "SELECT * from cars_types WHERE id = '$type_id'");
-    $row2 = mysqli_fetch_array($sql2);
-
-    $type = $row2['type'];
-
-    ?>
+      	<div class="row">
 
 
 
 
-    			<div class="col-md-4">
-    				<div class="car-wrap rounded ftco-animate">
-    					<div class="img rounded d-flex align-items-end" style="background-image: url(../Office_Dashboard/<?php echo $car_image ?>);">
-    					</div>
-    					<div class="text">
-    						<h2 class="mb-0"><a href="#"><?php echo $type ?></a></h2>
-    						<div class="d-flex mb-3">
-	    						<span class="cat"><?php echo $car_name ?></span>
-	    						<p class="price ml-auto">JOD<?php echo $price_per_day ?> <span>/day</span></p>
-    						</div>
-							<p class="d-flex mb-0 d-block align-items-center justify-content-center">
-                      <a href="./Order.php?car_id=<?php echo $car_id ?>&office_id=<?php echo $office_id ?>" class="btn btn-primary py-2 mr-1 mt-2">Book now</a>
+                  <div class="col-lg-12">
+
+                  <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"></h5>
+
+                <!-- Horizontal Form -->
+                <form method="POST" action="./Feedback.php?office_id=<?php echo $office_id ?>" enctype="multipart/form-data">
+
+                <input type="hidden" name="office_id" value="<?php echo $office_id ?>">
+                <input type="hidden" name="customer_id" value="<?php echo $C_ID ?>">
 
 
-					  <?php if ($C_ID) {?>
-						<a href="./Car.php?car_id=<?php echo $car_id ?>" class="btn btn-secondary py-2 ml-1">Details</a>
-						<?php }?>
-                    </p>
-    					</div>
-    				</div>
-    			</div>
+                  <div class="row mb-3">
+                    <label for="feedback" class="col-sm-2 col-form-label"
+                      >Feedback</label
+                    >
+                    <div class="col-sm-10">
 
-				<?php
-}?>
+                      <textarea name="feedback" id="feedback" class="form-control" required></textarea>
+                    </div>
+                  </div>
+
+
+
+
+
+                <!-- row2 -->
+                  <div class="text-end">
+                    <button type="submit" name="Submit" class="btn btn-primary">
+                      Submit
+                    </button>
+                    <button type="reset" class="btn btn-secondary">
+                      Reset
+                    </button>
+                  </div>
+                </form>
+                <!-- End Horizontal Form -->
+              </div>
+            </div>
+
+
+                  </div>
 
 
 
 
 
 
-    		</div>
 
-    	</div>
+
+
+      	</div>
+
+
+
+
+      </div>
     </section>
+
+
 
     <?php
 

@@ -2,32 +2,48 @@
 session_start();
 
 include "./Connect.php";
+$type = $_GET['type'];
 
 if (isset($_POST['Submit'])) {
 
+    $type = $_POST['type'];
     $email = $_POST['email'];
     $password = ($_POST['password']);
 
-    $query = mysqli_query($con, "SELECT * FROM customers WHERE email ='$email' AND password = '$password'");
+    if ($type === 'office') {
 
-    if (mysqli_num_rows($query) > 0) {
+        $stmt = $con->prepare("UPDATE offices SET password = ? WHERE email = ?");
+        $stmt->bind_param("ss", $password, $email);
 
-        $row = mysqli_fetch_array($query);
+        if ($stmt->execute()) {
 
-        $id = $row['id'];
+            echo "<script language='JavaScript'>
+          alert ('Password Updated Successfully !');
+     </script>";
 
-        $_SESSION['C_Log'] = $id;
-
-        echo '<script language="JavaScript">
-          document.location="Site/";
-          </script>';
+            echo "<script language='JavaScript'>
+    document.location='./Office_Login.php';
+       </script>";
+        }
 
     } else {
 
-        echo '<script language="JavaScript">
-	  alert ("Error ... Please Check Email Or Password !")
-      </script>';
+        $stmt = $con->prepare("UPDATE customers SET password = ? WHERE email = ?");
+        $stmt->bind_param("ss", $password, $email);
+
+        if ($stmt->execute()) {
+
+            echo "<script language='JavaScript'>
+          alert ('Password Updated Successfully !');
+     </script>";
+
+            echo "<script language='JavaScript'>
+    document.location='./Customer_Login.php';
+       </script>";
+        }
+
     }
+
 }
 ?>
 
@@ -37,7 +53,7 @@ if (isset($_POST['Submit'])) {
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>Customer Login Page</title>
+    <title>Forgot Password Page</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -83,8 +99,8 @@ if (isset($_POST['Submit'])) {
                 class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center"
               >
                 <div class="d-flex justify-content-center py-4">
-                  <a
-                    href="Admin_Login.php"
+                <a
+                    href="Office_Login.php"
                     class="d-flex align-items-center w-auto"
                   >
                     <img src="assets/img/Logo.png" alt="" width="150px" height="150px"/>
@@ -99,23 +115,25 @@ if (isset($_POST['Submit'])) {
                   <div class="card-body">
                     <div class="pt-4 pb-2">
                       <h5 class="card-title text-center pb-0 fs-4">
-                        Login to Your Account
+                        Forgot Password
                       </h5>
-                      <p class="text-center small">
-                        Enter your Email & Password to login
-                      </p>
+
                     </div>
 
-                    <form class="row g-3 needs-validation" method="POST" action="Customer_Login.php" id="login-form" >
+                    <form class="row g-3 needs-validation" method="POST" action="Forgot-password.php?type=<?php echo $type ?>" id="login-form">
+
+
+                    <input type="hidden" value="<?php echo $type ?>" name="type">
+
                       <div class="col-12">
-                        <label for="name" class="form-label">Email</label>
+                        <label for="email" class="form-label">Email</label>
                         <div class="input-group has-validation">
 
                           <input
                             type="email"
                             name="email"
                             class="form-control"
-                            id="Name"
+                            id="email"
                             required
                           />
                           <div class="invalid-feedback">
@@ -140,36 +158,10 @@ if (isset($_POST['Submit'])) {
                         </div>
                       </div>
 
-                      <div class="col-12">
-                        <div class="form-check">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            name="remember"
-                            value="true"
-                            id="rememberMe"
-                          />
-                          <label class="form-check-label" for="rememberMe"
-                            >Remember me</label
-                          >
-                        </div>
-                      </div>
-          
-                      <div class="col-12">
-                        <p class="small mb-0">
-                          Don't Have Account
-                          <a href="./Customer_Register.php">Signup Now</a>
-                        </p>
-                      </div>
 
                       <div class="col-12">
-                        <p class="small mb-0">
-                          <a href="./Forgot-password.php?type=customers">Forgot your password?</a>
-                        </p>
-                      </div>
-                      <div class="col-12">
                         <button class="btn btn-primary w-100" type="submit" name="Submit">
-                          Login
+                          Submit
                         </button>
                       </div>
 

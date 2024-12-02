@@ -175,6 +175,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
 
     $type_id = $row2['type_id'];
     $color = $row2['color'];
+    $car_name = $row2['name'];
 
     $sql3 = mysqli_query($con, "SELECT * from cars_types WHERE id = '$type_id'");
     $row3 = mysqli_fetch_array($sql3);
@@ -191,15 +192,14 @@ while ($row1 = mysqli_fetch_array($sql1)) {
                     <tr>
                       <th scope="row"><?php echo $booking_id ?></th>
                       <th scope="row"><?php echo $customer_name ?></th>
-                      <th scope="row"><?php echo $type ?> - <?php echo $color ?></th>
+                      <th scope="row"><?php echo $car_name ?></th>
                       <th scope="row"><?php echo $start_date ?></th>
                       <th scope="row"><?php echo $end_date ?></th>
                       <th scope="row"><?php echo $total_price ?> JODs</th>
                       <th scope="row"><?php echo $payment_type ?></th>
                       <th scope="row"><?php echo $status ?></th>
                       <th scope="row"><?php echo $created_at ?></th>
-                      <th scope="row">
-                      </th>
+                     
                     </tr>
 <?php
 }?>

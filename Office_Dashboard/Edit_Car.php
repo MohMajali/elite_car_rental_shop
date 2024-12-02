@@ -26,6 +26,7 @@ if (!$O_ID) {
 
     $type_id = $row2['type_id'];
     $color = $row2['color'];
+    $name = $row2['name'];
     $gear_transmission = $row2['gear_transmission'];
     $number_of_seats = $row2['number_of_seats'];
     $model = $row2['model'];
@@ -36,6 +37,7 @@ if (!$O_ID) {
         $car_id = $_POST['car_id'];
         $type_id = $_POST['type_id'];
         $color = $_POST['color'];
+        $name = $_POST['name'];
         $gear_transmission = $_POST['gear_transmission'];
         $number_of_seats = $_POST['number_of_seats'];
         $model = $_POST['model'];
@@ -46,9 +48,9 @@ if (!$O_ID) {
 
             $image = 'Cars_Images/' . $image;
 
-            $stmt = $con->prepare("UPDATE cars SET type_id = ?, image = ?, color = ?, gear_transmission = ?, number_of_seats = ?, model = ?, price_per_day = ? WHERE id = ?");
+            $stmt = $con->prepare("UPDATE cars SET type_id = ?, name = ?, image = ?, color = ?, gear_transmission = ?, number_of_seats = ?, model = ?, price_per_day = ? WHERE id = ?");
 
-            $stmt->bind_param("isssisdi", $type_id, $image, $color, $gear_transmission, $number_of_seats, $model, $price_per_day, $car_id);
+            $stmt->bind_param("issssisdi", $type_id, $name, $image, $color, $gear_transmission, $number_of_seats, $model, $price_per_day, $car_id);
 
             if ($stmt->execute()) {
 
@@ -66,9 +68,9 @@ if (!$O_ID) {
 
         } else {
 
-            $stmt = $con->prepare("UPDATE cars SET type_id = ?, color = ?, gear_transmission = ?, number_of_seats = ?, model = ?, price_per_day = ? WHERE id = ?");
+            $stmt = $con->prepare("UPDATE cars SET type_id = ?, name = ?, color = ?, gear_transmission = ?, number_of_seats = ?, model = ?, price_per_day = ? WHERE id = ?");
 
-            $stmt->bind_param("issisdi", $type_id, $color, $gear_transmission, $number_of_seats, $model, $price_per_day, $car_id);
+            $stmt->bind_param("isssisdi", $type_id, $name, $color, $gear_transmission, $number_of_seats, $model, $price_per_day, $car_id);
 
             if ($stmt->execute()) {
 
@@ -249,6 +251,15 @@ while ($placeRow = mysqli_fetch_array($placesSql)) {
                     <option value="Manual" <?php echo ($gear_transmission === 'Manual' ? 'selected' : '') ?>>Manual</option>
 
 </select>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="name" class="col-sm-2 col-form-label"
+                      >Name</label
+                    >
+                    <div class="col-sm-10">
+                      <input type="text" name="name" value="<?php echo $name ?>" class="form-control" id="name" required/>
                     </div>
                   </div>
 

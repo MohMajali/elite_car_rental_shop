@@ -63,8 +63,8 @@ if ($C_ID) {
 		  <ul class="navbar-nav ml-auto">
 	          <li class="nav-item "><a href="index.php" class="nav-link">Home</a></li>
 	          <li class="nav-item"><a href="about.php" class="nav-link">About</a></li>
-	          <li class="nav-item active"><a href="Cars.php" class="nav-link">Cars</a></li>
-	          <li class="nav-item "><a href="Offices.php" class="nav-link">Offices</a></li>
+	          <li class="nav-item "><a href="Cars.php" class="nav-link">Cars</a></li>
+	          <li class="nav-item active"><a href="Offices.php" class="nav-link">Offices</a></li>
 	          <li class="nav-item"><a href="contact.php" class="nav-link">Contact</a></li>
 
 			  <?php if($C_ID) {?>
@@ -94,8 +94,8 @@ if ($C_ID) {
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
           <div class="col-md-9 ftco-animate pb-5">
-          	<p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Cars <i class="ion-ios-arrow-forward"></i></span></p>
-            <h1 class="mb-3 bread">Choose Your Car</h1>
+          	<p class="breadcrumbs"><span class="mr-2"><a href="index.php">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Offices <i class="ion-ios-arrow-forward"></i></span></p>
+            <h1 class="mb-3 bread">Choose Office</h1>
           </div>
         </div>
       </div>
@@ -109,27 +109,15 @@ if ($C_ID) {
 
 
 			<?php
-$sql1 = $type_id ? mysqli_query($con, "SELECT * from cars WHERE active = 1 AND type_id = '$type_id' ORDER BY id DESC") :
- mysqli_query($con, "SELECT * from cars WHERE active = 1 ORDER BY id DESC");
+$sql1 = mysqli_query($con, "SELECT * from offices WHERE active = 1 ORDER BY id DESC");
 
 while ($row1 = mysqli_fetch_array($sql1)) {
 
-    $car_id = $row1['id'];
-    $office_id = $row1['office_id'];
-    $type_id = $row1['type_id'];
-    $car_name = $row1['name'];
-    $car_image = $row1['image'];
-    $color = $row1['color'];
-    $gear_transmission = $row1['gear_transmission'];
-    $number_of_seats = $row1['number_of_seats'];
-    $model = $row1['model'];
-    $price_per_day = $row1['price_per_day'];
-    $availability_status = $row1['availability_status'];
-
-    $sql2 = mysqli_query($con, "SELECT * from cars_types WHERE id = '$type_id'");
-    $row2 = mysqli_fetch_array($sql2);
-
-    $type = $row2['type'];
+    $office_id = $row1['id'];
+    $office_name = $row1['name'];
+    $office_email = $row1['email'];
+    $office_phone = $row1['phone'];
+    $office_image = $row1['image'];
 
     ?>
 
@@ -138,21 +126,21 @@ while ($row1 = mysqli_fetch_array($sql1)) {
 
     			<div class="col-md-4">
     				<div class="car-wrap rounded ftco-animate">
-    					<div class="img rounded d-flex align-items-end" style="background-image: url(../Office_Dashboard/<?php echo $car_image ?>);">
+    					<div class="img rounded d-flex align-items-end" style="background-image: url(../Office_Dashboard/<?php echo $office_image ?>);">
     					</div>
     					<div class="text">
-    						<h2 class="mb-0"><a href="#"><?php echo $type ?></a></h2>
+    						<h2 class="mb-0"><a href="#"><?php echo $office_name ?></a></h2>
     						<div class="d-flex mb-3">
-	    						<span class="cat"><?php echo $car_name ?></span>
-	    						<p class="price ml-auto">JOD<?php echo $price_per_day ?> <span>/day</span></p>
+	    						<span class="cat"><?php echo $office_phone ?></span>
+	    						<p class="price ml-auto"><?php echo $office_phone ?> <span></span></p>
     						</div>
 							<p class="d-flex mb-0 d-block align-items-center justify-content-center">
-                      <a href="./Order.php?car_id=<?php echo $car_id ?>&office_id=<?php echo $office_id ?>" class="btn btn-primary py-2 mr-1 mt-2">Book now</a>
 
 
-					  <?php if ($C_ID) {?>
-						<a href="./Car.php?car_id=<?php echo $car_id ?>" class="btn btn-secondary py-2 ml-1">Details</a>
-						<?php }?>
+
+                      <a href="./Office.php?office_id=<?php echo $office_id ?>" class="btn btn-primary py-2 mr-1 mt-2">Book now</a>
+
+
                     </p>
     					</div>
     				</div>

@@ -157,7 +157,6 @@ if (!$A_ID) {
                       <th scope="col">Status</th>
                       <th scope="col">Active</th>
                       <th scope="col">Created At</th>
-                      <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>

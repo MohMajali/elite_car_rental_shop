@@ -23,6 +23,7 @@ if (!$O_ID) {
 
         $office_id = $_POST['office_id'];
         $type_id = $_POST['type_id'];
+        $name = $_POST['name'];
         $color = $_POST['color'];
         $gear_transmission = $_POST['gear_transmission'];
         $number_of_seats = $_POST['number_of_seats'];
@@ -31,9 +32,9 @@ if (!$O_ID) {
         $image = $_FILES["file"]["name"];
         $image = 'Cars_Images/' . $image;
 
-        $stmt = $con->prepare("INSERT INTO cars (office_id, type_id, image, color, gear_transmission, number_of_seats, model, price_per_day) VALUES (?, ?, ?, ?, ?, ?, ?, ?) ");
+        $stmt = $con->prepare("INSERT INTO cars (office_id, type_id, name, image, color, gear_transmission, number_of_seats, model, price_per_day) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
 
-        $stmt->bind_param("iisssisd", $office_id, $type_id, $image, $color, $gear_transmission, $number_of_seats, $model, $price_per_day);
+        $stmt->bind_param("iissssisd", $office_id, $type_id, $name, $image, $color, $gear_transmission, $number_of_seats, $model, $price_per_day);
 
         if ($stmt->execute()) {
 
@@ -216,6 +217,15 @@ while ($placeRow = mysqli_fetch_array($placesSql)) {
                     <option value="Manual">Manual</option>
 
 </select>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="name" class="col-sm-2 col-form-label"
+                      >Name</label
+                    >
+                    <div class="col-sm-10">
+                      <input type="text" name="name" class="form-control" id="name" required/>
                     </div>
                   </div>
 

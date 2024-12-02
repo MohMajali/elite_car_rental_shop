@@ -29,6 +29,9 @@ if ($C_ID) {
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 
+	<link href="../assets/img/Logo.png" rel="icon" />
+    <link href="../assets/img/Logo.png" rel="apple-touch-icon" />
+	
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
 
@@ -62,11 +65,13 @@ if ($C_ID) {
 	          <li class="nav-item active"><a href="index.php" class="nav-link">Home</a></li>
 	          <li class="nav-item"><a href="about.php" class="nav-link">About</a></li>
 	          <li class="nav-item"><a href="Cars.php" class="nav-link">Cars</a></li>
+	          <li class="nav-item "><a href="Offices.php" class="nav-link">Offices</a></li>
 	          <li class="nav-item"><a href="contact.php" class="nav-link">Contact</a></li>
 
 			  <?php if($C_ID) {?>
 				
 				<li class="nav-item"><a href="Account.php" class="nav-link">Account</a></li>
+				<li class="nav-item "><a href="Bookings.php" class="nav-link">Bookings</a></li>
 				<li class="nav-item"><a href="Logout.php" class="nav-link">Logout</a></li>
 				
 				<?php } else { ?>
