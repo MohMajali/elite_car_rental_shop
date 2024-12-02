@@ -91,6 +91,11 @@ if ($C_ID) {
 
     <link href="../assets/img/Logo.png" rel="icon" />
     <link href="../assets/img/Logo.png" rel="apple-touch-icon" />
+
+    <link
+      href="../assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     
     <link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="css/animate.css">
@@ -292,13 +297,108 @@ if ($C_ID) {
                     <?php }?>
                       </div>
                 <!-- row2 -->
+
+
+
+                <div class="row mb-3">
+                <p class="small mb-0">
+                          Terms & Conditions
+                          <a href="" data-bs-toggle="modal"
+                          data-bs-target="#verticalycentered">Terms & Conditions</a>
+
+                        </p>
+                  
+                  </div>
+
+
+
+
+
+
+
+                  <div class="modal fade" id="verticalycentered" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Information</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+
+<div>
+
+
+
+
+
+<?php
+$sql1 = mysqli_query($con, "SELECT * from car_terms WHERE car_id = '$car_id' ORDER BY id DESC");
+$counter = 0;
+while ($row1 = mysqli_fetch_array($sql1)) {
+
+    $term_id = $row1['id'];
+    $terms = $row1['terms'];
+    $created_at = $row1['created_at'];
+
+    $counter += 1;
+    ?>
+
+
+
+
+
+
+  <div class="row mb-3">
+    <label for="inputText" class="col-sm-2 col-form-label"
+      ><?php echo $counter?>.</label
+    >
+    <div class="col-sm-10">
+       <p><?php echo $terms?>.</p>
+    </div>
+  </div>
+
+  <?php
+}?>
+
+
+</div>
+
+
+
+
+              </div>
+              <div class="modal-footer">
+                <button
+                id="accept-btn"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Accept
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
                   <div class="text-end">
-                    <button type="submit" name="Submit" class="btn btn-primary">
+                    <button type="submit" name="Submit" class="btn btn-primary" id="submit-btn" disabled>
                       Submit
                     </button>
-                    <button type="reset" class="btn btn-secondary">
-                      Reset
-                    </button>
+             
                   </div>
                 </form>
                 <!-- End Horizontal Form -->
@@ -337,6 +437,7 @@ require './Footer.php'
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/popper.min.js"></script>
@@ -367,6 +468,21 @@ require './Footer.php'
                 document.getElementById('online').style.display = 'none'
             }
     })
+
+
+
+
+
+
+
+
+
+
+    document.getElementById('accept-btn').addEventListener('click', function() {
+
+document.getElementById('submit-btn').disabled = false
+})
   </script>
+  
   </body>
 </html>
