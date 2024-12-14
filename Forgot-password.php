@@ -144,7 +144,7 @@ if (isset($_POST['Submit'])) {
 
                       <div class="col-12">
                         <label for="yourPassword" class="form-label"
-                          >Password</label
+                          >New Password</label
                         >
                         <input
                           type="password"

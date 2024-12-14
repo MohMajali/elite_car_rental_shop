@@ -18,6 +18,7 @@ if (!$O_ID) {
 
     $name = $row1['name'];
     $email = $row1['email'];
+    $image = $row1['image'];
 
     if (isset($_POST['Submit'])) {
 
@@ -115,7 +116,7 @@ if (!$O_ID) {
               data-bs-toggle="dropdown"
             >
               <img
-                src="https://www.computerhope.com/jargon/g/guest-user.png"
+                src="<?php echo $image ?>"
                 alt="Profile"
                 class="rounded-circle"
               />
@@ -254,7 +255,7 @@ while ($placeRow = mysqli_fetch_array($placesSql)) {
                       >Model</label
                     >
                     <div class="col-sm-10">
-                      <input type="text" name="model" class="form-control" id="model" required/>
+                      <input type="number" min="1" name="model" class="form-control" id="model" required/>
                     </div>
                   </div>
 

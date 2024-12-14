@@ -18,6 +18,7 @@ if (!$O_ID) {
 
     $name = $row1['name'];
     $email = $row1['email'];
+    $image = $row1['image'];
 }
 
 ?>
@@ -83,7 +84,7 @@ if (!$O_ID) {
               data-bs-toggle="dropdown"
             >
               <img
-                src="https://www.computerhope.com/jargon/g/guest-user.png"
+                src="<?php echo $image ?>"
                 alt="Profile"
                 class="rounded-circle"
               />
@@ -173,7 +174,7 @@ if (!$O_ID) {
 
 
                   <?php
-$sql1 = mysqli_query($con, "SELECT * from cars WHERE office_id = '$O_ID' ORDER BY id DESC");
+$sql1 = mysqli_query($con, "SELECT * from cars WHERE office_id = '$O_ID' AND (availability_status = 0 OR availability_status = 1) ORDER BY id DESC");
 
 while ($row1 = mysqli_fetch_array($sql1)) {
 
@@ -206,7 +207,17 @@ while ($row1 = mysqli_fetch_array($sql1)) {
                       <td scope="row"><?php echo $number_of_seats ?></td>
                       <td scope="row"><?php echo $model ?></td>
                       <td scope="row"><?php echo $price_per_day ?> JODs</td>
-                      <td scope="row"><?php echo ($availability_status == 0) ? "Available" : "Booked" ?></td>
+                      <td scope="row"><?php
+
+    if ($availability_status == 0) {
+        echo "Available";
+    } else if ($availability_status == 1) {
+        echo "Booked";
+    } else if ($availability_status == 2) {
+        echo "Unavailable";
+    }
+
+    ?></td>
                       <th scope="row"><?php echo $created_at ?></th>
                       <th>
 
@@ -214,16 +225,15 @@ while ($row1 = mysqli_fetch_array($sql1)) {
                       <div class="d-flex flex-column">
 
 
-                        <?php if ($active == 1) {?>
-  
-  <a href="./DeleteOrRestoreCar.php?car_id=<?php echo $car_id ?>&isActive=<?php echo 0 ?>" class="btn btn-danger mb-2">Delete</a>
-  
-  <?php } else {?>
-  
-    <a href="./DeleteOrRestoreCar.php?car_id=<?php echo $car_id ?>&isActive=<?php echo 1 ?>" class="btn btn-primary mb-2">Restore</a>
-  
-  <?php }?>
-  
+
+                      <?php if($active == 1 && $availability_status == 0) {?>
+
+                        <a href="./DeleteOrRestoreCar.php?car_id=<?php echo $car_id ?>&isActive=<?php echo 0 ?>&status=2" class="btn btn-danger mb-2">Delete</a>
+                        <?php }?>
+                        
+
+
+
   <a href="./Edit_Car.php?car_id=<?php echo $car_id ?>" class="btn btn-primary mb-2">Edit</a>
   <a href="./Terms.php?car_id=<?php echo $car_id ?>" class="btn btn-success">Terms & Conditions</a>
 

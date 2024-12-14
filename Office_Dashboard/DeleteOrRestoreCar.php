@@ -4,11 +4,12 @@ include "../Connect.php";
 
 
 $isActive = $_GET['isActive'];
+$status = $_GET['status'];
 $car_id = $_GET['car_id'];
 
-$stmt = $con->prepare("UPDATE cars SET active = ? WHERE id = ? ");
+$stmt = $con->prepare("UPDATE cars SET active = ?, availability_status = ? WHERE id = ? ");
 
-$stmt->bind_param("ii", $isActive, $car_id);
+$stmt->bind_param("iii", $isActive, $status, $car_id);
 
 if ($stmt->execute()) {
 

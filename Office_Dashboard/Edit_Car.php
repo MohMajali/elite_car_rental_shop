@@ -20,13 +20,14 @@ if (!$O_ID) {
 
     $name = $row1['name'];
     $email = $row1['email'];
+    $image = $row1['image'];
 
     $sql2 = mysqli_query($con, "select * from cars where id='$car_id'");
     $row2 = mysqli_fetch_array($sql2);
 
     $type_id = $row2['type_id'];
     $color = $row2['color'];
-    $name = $row2['name'];
+    $car_name = $row2['name'];
     $gear_transmission = $row2['gear_transmission'];
     $number_of_seats = $row2['number_of_seats'];
     $model = $row2['model'];
@@ -151,7 +152,7 @@ if (!$O_ID) {
               data-bs-toggle="dropdown"
             >
               <img
-                src="https://www.computerhope.com/jargon/g/guest-user.png"
+                src="<?php echo $image ?>"
                 alt="Profile"
                 class="rounded-circle"
               />
@@ -259,7 +260,7 @@ while ($placeRow = mysqli_fetch_array($placesSql)) {
                       >Name</label
                     >
                     <div class="col-sm-10">
-                      <input type="text" name="name" value="<?php echo $name ?>" class="form-control" id="name" required/>
+                      <input type="text" name="name" value="<?php echo $car_name ?>" class="form-control" id="name" required/>
                     </div>
                   </div>
 
@@ -288,7 +289,7 @@ while ($placeRow = mysqli_fetch_array($placesSql)) {
                       >Model</label
                     >
                     <div class="col-sm-10">
-                      <input type="text" name="model" value="<?php echo $model ?>" class="form-control" id="model" required/>
+                      <input type="nuber" min="1" name="model" value="<?php echo $model ?>" class="form-control" id="model" required/>
                     </div>
                   </div>
 

@@ -22,6 +22,7 @@ if (!$O_ID) {
     $address = $row1['address'];
     $description = $row1['description'];
     $password = $row1['password'];
+    $image = $row1['image'];
 
     if (isset($_POST['Submit'])) {
 
@@ -50,7 +51,7 @@ if (!$O_ID) {
            </script>";
 
                 echo "<script language='JavaScript'>
-          document.location='./Account.php';
+          document.location='./Profile.php';
              </script>";
 
             }
@@ -138,11 +139,11 @@ if (!$O_ID) {
               data-bs-toggle="dropdown"
             >
               <img
-                src="https://www.computerhope.com/jargon/g/guest-user.png"
+                src="<?php echo $image ?>"
                 alt="Profile"
                 class="rounded-circle"
               />
-              <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $title ?></span> </a
+              <span class="d-none d-md-block dropdown-toggle ps-2"><?php echo $name ?></span> </a
             >
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">

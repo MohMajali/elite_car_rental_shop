@@ -22,7 +22,7 @@
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="./Bookings.php">
-        <i class="bi bi-journal-richtext"></i><span>Bookings</span>
+        <i class="bi bi-journal-richtext"></i><span>Bookings Report</span>
       </a>
     </li>
 

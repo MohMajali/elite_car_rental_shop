@@ -21,6 +21,7 @@ if (!$O_ID) {
 
     $name = $row1['name'];
     $email = $row1['email'];
+    $image = $row1['image'];
 
     $sql2 = mysqli_query($con, "select * from car_terms where id='$term_id'");
     $row2 = mysqli_fetch_array($sql2);
@@ -114,7 +115,7 @@ if (!$O_ID) {
               data-bs-toggle="dropdown"
             >
               <img
-                src="https://www.computerhope.com/jargon/g/guest-user.png"
+                src="<?php echo $image ?>"
                 alt="Profile"
                 class="rounded-circle"
               />

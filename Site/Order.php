@@ -44,7 +44,7 @@ if ($C_ID) {
 
             $totalPrice = $totalPrice * 0.10;
 
-        } else if ($booking_nums == 5) {
+        } else if ($booking_nums == 4) {
 
             $totalPrice = $totalPrice * 0.50;
 

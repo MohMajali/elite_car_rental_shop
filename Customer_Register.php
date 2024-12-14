@@ -237,8 +237,91 @@ if (isset($_POST['Submit'])) {
 
 
 
+
+
                       <div class="col-12">
-                        <button class="btn btn-primary w-100" type="submit" name="Submit">
+                        <p class="small mb-0">
+                          Terms & Conditions
+                          <a href="" data-bs-toggle="modal"
+                          data-bs-target="#verticalycentered">Terms & Conditions</a>
+
+                        </p>
+                      </div>
+
+
+
+
+
+                      <div class="modal fade" id="verticalycentered" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Information</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+
+<div>
+
+
+  <div class="row mb-3">
+    <label for="inputText" class="col-sm-2 col-form-label"
+      >1.</label
+    >
+    <div class="col-sm-10">
+       <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident labore obcaecati culpa autem ipsa sunt minus velit laudantium? At illo dignissimos enim repellat culpa autem, accusamus tempore consectetur nesciunt delectus.</p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputText" class="col-sm-2 col-form-label"
+      >2.</label
+    >
+    <div class="col-sm-10">
+       <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident labore obcaecati culpa autem ipsa sunt minus velit laudantium? At illo dignissimos enim repellat culpa autem, accusamus tempore consectetur nesciunt delectus.</p>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="inputText" class="col-sm-2 col-form-label"
+      >3.</label
+    >
+    <div class="col-sm-10">
+       <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Provident labore obcaecati culpa autem ipsa sunt minus velit laudantium? At illo dignissimos enim repellat culpa autem, accusamus tempore consectetur nesciunt delectus.</p>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+              </div>
+              <div class="modal-footer">
+                <button
+                id="accept-btn"
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >
+                  Accept
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+                      <div class="col-12">
+                        <button class="btn btn-primary w-100" type="submit" name="Submit" id="submit-btn" disabled>
                           Signup
                         </button>
                       </div>
@@ -275,6 +358,18 @@ if (isset($_POST['Submit'])) {
     <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
     <script src="assets/vendor/tinymce/tinymce.min.js"></script>
     <script src="assets/vendor/php-email-form/validate.js"></script>
+
+
+    <script>
+
+
+document.getElementById('accept-btn').addEventListener('click', function() {
+
+  document.getElementById('submit-btn').disabled = false
+})
+
+
+</script>
 
     <!-- Template Main JS File -->
     <script src="assets/js/main.js"></script>

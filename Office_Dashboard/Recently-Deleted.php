@@ -29,7 +29,7 @@ if (!$O_ID) {
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-    <title>Bookings - Elite</title>
+    <title>Recently Cars - Elite</title>
     <meta content="" name="description" />
     <meta content="" name="keywords" />
 
@@ -120,17 +120,22 @@ if (!$O_ID) {
     <!-- End Sidebar-->
 
     <main id="main" class="main">
+
+
+
       <div class="pagetitle">
-        <h1>Bookings</h1>
+        <h1>Recently Deleted Cars</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.php">Dashboard</a></li>
-            <li class="breadcrumb-item">Bookings</li>
+            <li class="breadcrumb-item">Recently Deleted Cars</li>
           </ol>
         </nav>
       </div>
       <!-- End Page Title -->
       <section class="section">
+
+
 
 
 
@@ -143,12 +148,14 @@ if (!$O_ID) {
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
-                      <th scope="col">Customer Name</th>
-                      <th scope="col">Car</th>
-                      <th scope="col">Start Date</th>
-                      <th scope="col">End Date</th>
-                      <th scope="col">Total Price</th>
-                      <th scope="col">Payment Type</th>
+                      <th scope="col">Image</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Type</th>
+                      <th scope="col">Color</th>
+                      <th scope="col">Gear Type</th>
+                      <th scope="col">Seats #</th>
+                      <th scope="col">model</th>
+                      <th scope="col">Price / Day</th>
                       <th scope="col">Status</th>
                       <th scope="col">Created At</th>
                       <th scope="col">Actions</th>
@@ -158,62 +165,64 @@ if (!$O_ID) {
 
 
                   <?php
-$sql1 = mysqli_query($con, "SELECT * from bookings WHERE office_id = '$O_ID' ORDER BY id DESC");
+$sql1 = mysqli_query($con, "SELECT * from cars WHERE office_id = '$O_ID' AND (availability_status = 2) ORDER BY id DESC");
 
 while ($row1 = mysqli_fetch_array($sql1)) {
 
-    $booking_id = $row1['id'];
-    $car_id = $row1['car_id'];
-    $customer_id = $row1['customer_id'];
-    $start_date = $row1['start_date'];
-    $end_date = $row1['end_date'];
-    $total_price = $row1['total_price'];
-    $payment_type = $row1['payment_type'];
-    $status = $row1['status'];
+    $car_id = $row1['id'];
+    $type_id = $row1['type_id'];
+    $image = $row1['image'];
+    $name = $row1['name'];
+    $color = $row1['color'];
+    $gear_transmission = $row1['gear_transmission'];
+    $number_of_seats = $row1['number_of_seats'];
+    $model = $row1['model'];
+    $price_per_day = $row1['price_per_day'];
+    $availability_status = $row1['availability_status'];
+    $active = $row1['active'];
     $created_at = $row1['created_at'];
 
-    $sql2 = mysqli_query($con, "SELECT * from cars WHERE id = '$car_id'");
+    $sql2 = mysqli_query($con, "SELECT * from cars_types WHERE id = '$type_id'");
     $row2 = mysqli_fetch_array($sql2);
 
-    $type_id = $row2['type_id'];
-    $color = $row2['color'];
-    $car_name = $row2['name'];
-
-    $sql3 = mysqli_query($con, "SELECT * from cars_types WHERE id = '$type_id'");
-    $row3 = mysqli_fetch_array($sql3);
-
-    $type = $row3['type'];
-
-    $sql5 = mysqli_query($con, "SELECT * from customers WHERE id = '$customer_id'");
-    $row5 = mysqli_fetch_array($sql5);
-
-    $customer_name = $row5['name'];
-    $customer_phone = $row5['phone'];
+    $type = $row2['type'];
 
     ?>
                     <tr>
-                      <th scope="row"><?php echo $booking_id ?></th>
-                      <th scope="row"><?php echo $customer_name ?></th>
-                      <th scope="row"><?php echo $car_name ?></th>
-                      <th scope="row"><?php echo $start_date ?></th>
-                      <th scope="row"><?php echo $end_date ?></th>
-                      <th scope="row"><?php echo $total_price ?> JODs</th>
-                      <th scope="row"><?php echo $payment_type ?></th>
-                      <th scope="row"><?php echo $status ?></th>
+                      <th scope="row"><?php echo $car_id ?></th>
+                      <th scope="row"><img src="../Office_Dashboard/<?php echo $image ?>" alt="" width="150px" height="150px"></th>
+                      <th scope="row"><?php echo $name ?></th>
+                      <th scope="row"><?php echo $type ?></th>
+                      <td scope="row"><?php echo $color ?></td>
+                      <td scope="row"><?php echo $gear_transmission ?></td>
+                      <td scope="row"><?php echo $number_of_seats ?></td>
+                      <td scope="row"><?php echo $model ?></td>
+                      <td scope="row"><?php echo $price_per_day ?> JODs</td>
+                      <td scope="row"><?php
+
+    if ($availability_status == 0) {
+        echo "Available";
+    } else if ($availability_status == 1) {
+        echo "Booked";
+    } else if ($availability_status == 2) {
+        echo "Unavailable";
+    }
+
+    ?></td>
                       <th scope="row"><?php echo $created_at ?></th>
-
-
                       <th>
 
-      <?php if ($status == 'Pending') {?>
 
-        <a href="./AcceptOrRejectBooking.php?book_id=<?php echo $booking_id ?>&status=Accepted" class="btn btn-success">Accept</a>
-        <a href="./AcceptOrRejectBooking.php?book_id=<?php echo $booking_id ?>&status=Rejected" class="btn btn-danger">Reject</a>
-      <?php }?>
+                      <div class="d-flex flex-column">
+
+    <a href="./DeleteOrRestoreCar.php?car_id=<?php echo $car_id ?>&isActive=<?php echo 1 ?>&status=0" class="btn btn-primary mb-2">Restore</a>
+
+
+
+                      </div>
 
 
                       </th>
-
                     </tr>
 <?php
 }?>
@@ -245,7 +254,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
 
     <script>
     window.addEventListener('DOMContentLoaded', (event) => {
-     document.querySelector('#sidebar-nav .nav-item:nth-child(6) .nav-link').classList.remove('collapsed')
+     document.querySelector('#sidebar-nav .nav-item:nth-child(4) .nav-link').classList.remove('collapsed')
    });
 </script>
 

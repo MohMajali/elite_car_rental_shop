@@ -5,6 +5,11 @@ include "../Connect.php";
 
 $O_ID = $_SESSION['O_Log'];
 
+$customerId_query = $_GET['customer_id'];
+$carId_query = $_GET['car_id'];
+
+$sqlQuery = "SELECT * from bookings WHERE office_id = '$O_ID' ORDER BY id DESC";
+
 if (!$O_ID) {
 
     echo '<script language="JavaScript">
@@ -19,6 +24,21 @@ if (!$O_ID) {
     $name = $row1['name'];
     $email = $row1['email'];
     $image = $row1['image'];
+
+
+    if ($customerId_query && $carId_query) {
+
+      $sqlQuery = "SELECT * from bookings WHERE office_id = '$O_ID' AND customer_id = '$customerId_query' AND car_id = '$carId_query' ORDER BY id DESC";
+
+  } else if ($customerId_query) {
+
+      $sqlQuery = "SELECT * from bookings WHERE office_id = '$O_ID' AND customer_id = '$customerId_query' ORDER BY id DESC";
+
+  } else if ($carId_query) {
+
+      $sqlQuery = "SELECT * from bookings WHERE office_id = '$O_ID' AND car_id = '$carId_query' ORDER BY id DESC";
+
+  }
 }
 
 ?>
@@ -133,13 +153,90 @@ if (!$O_ID) {
       <section class="section">
 
 
+      <script>
+        function printDiv() {
+            var divContents = document.getElementById("div_print").innerHTML;
+            var a = window.open('', '', 'height=1000, width=5000');
+            a.document.write('<html>');
+            a.document.write('<body >');
+            a.document.write(divContents);
+            a.document.write('</body></html>');
+            a.document.close();
+            a.print();
+        }
+    </script>
 
-        <div class="row">
+
+<div class="mb-3">
+
+<input type="button" value="PRINT REPORT" class="btn btn-primary" onclick="printDiv()">
+</div>
+
+
+<div id="div_print">
+
+
+<div class="row">
           <div class="col-lg-12">
             <div class="card">
               <div class="card-body">
                 <!-- Table with stripped rows -->
-                <table class="table datatable">
+
+
+
+
+
+                <form action="./Booking-Reports.php" class="mt-3 mb-3">
+
+<select name="customer_id" id="">
+
+<option value="" selected disabled>Select Customer</option>
+<?php
+$sql323232 = mysqli_query($con, "SELECT * from customers WHERE active = 1 ORDER BY id DESC");
+
+while ($row323232 = mysqli_fetch_array($sql323232)) {
+
+$customer_id = $row323232['id'];
+$customer_name = $row323232['name'];
+
+?>
+
+<option value="<?php echo $customer_id ?>"><?php echo $customer_name ?></option>
+<?php
+}?>
+</select>
+
+
+
+
+<select name="car_id" id="">
+
+<option value="" selected disabled>Select Car</option>
+<?php
+$sql12121 = mysqli_query($con, "SELECT * from cars WHERE active = 1 ORDER BY id DESC");
+
+while ($row12121 = mysqli_fetch_array($sql12121)) {
+
+$car_id = $row12121['id'];
+$car_name = $row12121['name'];
+
+?>
+
+<option value="<?php echo $car_id ?>"><?php echo $car_name ?></option>
+<?php
+}?>
+</select>
+
+
+<button type="submit" >Filter</button>
+
+</form>
+
+
+
+
+
+                <table class="table">
                   <thead>
                     <tr>
                       <th scope="col">ID</th>
@@ -151,14 +248,13 @@ if (!$O_ID) {
                       <th scope="col">Payment Type</th>
                       <th scope="col">Status</th>
                       <th scope="col">Created At</th>
-                      <th scope="col">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
 
 
                   <?php
-$sql1 = mysqli_query($con, "SELECT * from bookings WHERE office_id = '$O_ID' ORDER BY id DESC");
+$sql1 = mysqli_query($con, $sqlQuery);
 
 while ($row1 = mysqli_fetch_array($sql1)) {
 
@@ -201,19 +297,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
                       <th scope="row"><?php echo $payment_type ?></th>
                       <th scope="row"><?php echo $status ?></th>
                       <th scope="row"><?php echo $created_at ?></th>
-
-
-                      <th>
-
-      <?php if ($status == 'Pending') {?>
-
-        <a href="./AcceptOrRejectBooking.php?book_id=<?php echo $booking_id ?>&status=Accepted" class="btn btn-success">Accept</a>
-        <a href="./AcceptOrRejectBooking.php?book_id=<?php echo $booking_id ?>&status=Rejected" class="btn btn-danger">Reject</a>
-      <?php }?>
-
-
-                      </th>
-
+                     
                     </tr>
 <?php
 }?>
@@ -224,6 +308,11 @@ while ($row1 = mysqli_fetch_array($sql1)) {
             </div>
           </div>
         </div>
+
+
+</div>
+
+
       </section>
     </main>
     <!-- End #main -->
@@ -245,7 +334,7 @@ while ($row1 = mysqli_fetch_array($sql1)) {
 
     <script>
     window.addEventListener('DOMContentLoaded', (event) => {
-     document.querySelector('#sidebar-nav .nav-item:nth-child(6) .nav-link').classList.remove('collapsed')
+     document.querySelector('#sidebar-nav .nav-item:nth-child(7) .nav-link').classList.remove('collapsed')
    });
 </script>
 
